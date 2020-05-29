@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxmlf/1" xmlns="http://javafx.com/javax/2.2" fx:controller="javafx_application.repository.component_controllers.InfoAtsWorkerController">
+  <children>
+    <Pane layoutX="0.0" layoutY="0.0" prefHeight="400.0" prefWidth="600.0" style="">
+      <children>
+        <Label layoutX="204.0" layoutY="14.0" prefHeight="46.94140625" prefWidth="228.0" text="Расскажите о себе" textAlignment="CENTER">
+          <font>
+            <Font size="23.0" />
+          </font>
+          <textFill>
+            <Color blue="0.047" green="0.686" red="0.557" fx:id="x1" />
+          </textFill>
+        </Label>
+        <Button id="submitInfo" fx:id="submit" layoutX="405.0" layoutY="319.0" mnemonicParsing="false" onMouseClicked="#submitAtsWorkerInfo" style="-fx-background-color: #8EAF0C" text="Подтвердить" textFill="WHITE" />
+        <Label layoutX="168.0" layoutY="138.0" text="Имя" textFill="$x1" />
+        <Label layoutX="168.0" layoutY="210.0" text="Фамилия" textFill="$x1" />
+        <TextField fx:id="second_name" layoutX="300.0" layoutY="210.0" prefWidth="125.0" />
+        <TextField id="namr" fx:id="name" layoutX="300.0" layoutY="138.0" prefWidth="125.0" />
+      </children>
+    </Pane>
+  </children>
+</AnchorPane>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="javafx_application.repository.component_controllers.IntercityCallController">
+  <children>
+    <AnchorPane layoutX="0.0" layoutY="0.0" prefHeight="400.0" prefWidth="600.0">
+      <children>
+        <Label layoutX="154.0" layoutY="29.0" prefHeight="47.0" prefWidth="292.0" text="Добавить внутренний звонок" textAlignment="LEFT">
+          <font>
+            <Font size="20.0" />
+          </font>
+          <textFill>
+            <Color blue="0.047" green="0.686" red="0.557" fx:id="x1" />
+          </textFill>
+        </Label>
+        <Label layoutX="41.0" layoutY="126.0" text="Кто позвонил:" textFill="$x1" />
+        <TextField fx:id="caller" layoutX="41.0" layoutY="160.0" prefWidth="200.0" />
+        <TextField fx:id="city" layoutX="41.0" layoutY="256.0" prefWidth="200.0" />
+        <Label layoutX="41.0" layoutY="220.0" text="Куда:" textFill="$x1" />
+        <Label layoutX="332.0" layoutY="126.0" text="Когда:">
+          <textFill>
+            <Color blue="0.047" green="0.686" red="0.557" fx:id="x2" />
+          </textFill>
+        </Label>
+        <TextField fx:id="when" layoutX="332.0" layoutY="160.0" prefWidth="200.0" />
+        <Button layoutX="422.0" layoutY="254.0" mnemonicParsing="false" onMouseClicked="#addCall" style="-fx-background-color: #8EAF0C" text="Добавить" textFill="WHITE" />
+        <Label layoutX="332.0" layoutY="200.0" text="Дата в формате d/m/year" textFill="$x2" />
+      </children>
+    </AnchorPane>
+  </children>
+</AnchorPane>

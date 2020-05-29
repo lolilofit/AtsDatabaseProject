@@ -1,0 +1,154 @@
+1.
+SELECT ATS.ATSID, COUNT(NUMBERS.ATSID) FROM C##ATS.ATS LEFT JOIN C##ATS.NUMBERS ON ATS.ATSID = NUMBERS.ATSID GROUP BY ATS.ATSID
+
+SELECT ATS.ATSID, COUNT(NUMBERS.ATSID) FROM ((C##ATS.ATS LEFT JOIN C##ATS.NUMBERS ON ATS.ATSID = NUMBERS.ATSID) 
+left join (ADDRESSNUMBER INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id) ON addressnumber.numb = numbers.numberid)
+WHERE subscriber.subtypeid = 1
+GROUP BY ATS.ATSID
+
+SELECT ATS.ATSID, COUNT(NUMBERS.ATSID) FROM ((C##ATS.ATS LEFT JOIN C##ATS.NUMBERS ON ATS.ATSID = NUMBERS.ATSID) 
+left join (ADDRESSNUMBER INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id) ON addressnumber.numb = numbers.numberid)
+WHERE subscriber.age > 0 AND subscriber.age < 100
+GROUP BY ATS.ATSID
+
+SELECT ATS.ATSID, COUNT(NUMBERS.ATSID) FROM ((C##ATS.ATS LEFT JOIN C##ATS.NUMBERS ON ATS.ATSID = NUMBERS.ATSID) 
+left join (ADDRESSNUMBER INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id) ON addressnumber.numb = numbers.numberid)
+WHERE subscriber.second_name = 'tester'
+GROUP BY ATS.ATSID
+
+2.
+SELECT NUMBERS.numbr FROM NUMBERS WHERE isfree = 'Y' AND atsid = 1
+
+SELECT COUNT(NUMBERS.numbr) FROM NUMBERS WHERE isfree = 'Y' AND atsid = 1
+
+SELECT NUMBERS.numbr FROM NUMBERS WHERE isfree = 'Y'
+
+//возможность установки
+
+3.
+SELECT COUNT(NUMBERS.ATSID) FROM (C##ATS.NUMBERS 
+left join (ADDRESSNUMBER INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id) ON addressnumber.numb = numbers.numberid INNER JOIN PAYMENTS ON payments.id = subscriber.paymentid)
+WHERE payments.DEBT > 0
+
+SELECT COUNT(NUMBERS.ATSID) FROM (C##ATS.NUMBERS
+left join (ADDRESSNUMBER INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id) ON addressnumber.numb = numbers.numberid INNER JOIN PAYMENTS ON payments.id = subscriber.paymentid)
+WHERE PAYMENTS.DEBT > 0 AND NUMBERS.ATSID = 1
+
+SELECT COUNT(NUMBERS.ATSID) FROM (C##ATS.NUMBERS
+left join (ADDRESSNUMBER INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id) ON addressnumber.numb = numbers.numberid INNER JOIN PAYMENTS ON payments.id = subscriber.paymentid)
+WHERE PAYMENTS.DEBT > 0 AND ADDRESSNUMBER.area = ""
+
+SELECT COUNT(NUMBERS.ATSID) FROM (C##ATS.NUMBERS
+left join (ADDRESSNUMBER INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id) ON addressnumber.numb = numbers.numberid INNER JOIN PAYMENTS ON payments.id = subscriber.paymentid)
+WHERE PAYMENTS.DEBT > 0 AND PAYMENTS.LASTPAYMENT  < sysdate - 7
+
+SELECT subscriber.name, subscriber.name FROM (C##ATS.NUMBERS 
+left join (ADDRESSNUMBER INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id) ON addressnumber.numb = numbers.numberid INNER JOIN PAYMENTS ON payments.id = subscriber.paymentid)
+WHERE payments.DEBT > 0 and numbers.atsid = 1
+
+4.
+SELECT ATS.atsid FROM (C##ATS.NUMBERS 
+left join (ADDRESSNUMBER INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id) ON addressnumber.numb = numbers.numberid INNER JOIN PAYMENTS ON payments.id = subscriber.paymentid INNER JOIN c##ats.ats on ats.atsid = NUMBERS.atsid)
+WHERE payments.DEBT = 
+(select max(payments.debt)
+FROM (C##ATS.NUMBERS 
+left join (ADDRESSNUMBER INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id) ON addressnumber.numb = numbers.numberid INNER JOIN PAYMENTS ON payments.id = subscriber.paymentid INNER JOIN c##ats.ats on ats.atsid = NUMBERS.atsid)
+)
+
+SELECT ATS.atsid FROM (C##ATS.NUMBERS 
+left join (ADDRESSNUMBER INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id) ON addressnumber.numb = numbers.numberid INNER JOIN PAYMENTS ON payments.id = subscriber.paymentid INNER JOIN c##ats.ats on ats.atsid = NUMBERS.atsid)
+WHERE payments.DEBT = 
+(select min(payments.debt)
+FROM (C##ATS.NUMBERS 
+left join (ADDRESSNUMBER INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id) ON addressnumber.numb = numbers.numberid INNER JOIN PAYMENTS ON payments.id = subscriber.paymentid INNER JOIN c##ats.ats on ats.atsid = NUMBERS.atsid)
+)
+
+5. 
+select count(c##ats.addressnumber.id) 
+from c##ats.addressnumber left join c##ats.placetype on c##ats.addressnumber.idtypeplace = c##ats.placetype.id
+where c##ats.placetype.name = 'city' or c##ats.placetype.name = 'payphone' 
+group by c##ats.addressnumber.id
+
+select count(c##ats.addressnumber.id) 
+from c##ats.addressnumber INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id inner join c##ats.numbers ON addressnumber.numb = numbers.numberid
+left join c##ats.placetype on c##ats.addressnumber.idtypeplace = c##ats.placetype.id
+where (c##ats.placetype.name = 'city' or c##ats.placetype.name = 'payphone') and c##ats.numbers.atsid = 1
+group by c##ats.addressnumber.id
+
+select count(c##ats.addressnumber.id) 
+from c##ats.addressnumber INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id inner join c##ats.numbers ON addressnumber.numb = numbers.numberid
+left join c##ats.placetype on c##ats.addressnumber.idtypeplace = c##ats.placetype.id
+where (c##ats.placetype.name = 'city' or c##ats.placetype.name = 'payphone') and c##ats.addressnumber.area = 'NN' 
+group by c##ats.addressnumber.id
+
+6. 
+select usual/total_sub
+from (select count(c##ats.subscribertype.name) as usual 
+from c##ats.addressnumber INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id left join c##ats.numbers ON addressnumber.numb = numbers.numberid inner join c##ats.subscribertype on c##ats.subscribertype.id = c##ats.subscriber.subtypeid
+left join c##ats.placetype on c##ats.addressnumber.idtypeplace = c##ats.placetype.id 
+where c##ats.subscribertype.name = 'usual'),
+(select count(c##ats.subscriber.id) as total_sub from c##ats.subscriber)
+
+select usual/total_sub
+from (select count(c##ats.subscribertype.name) as usual 
+from c##ats.addressnumber INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id left join c##ats.numbers ON addressnumber.numb = numbers.numberid inner join c##ats.subscribertype on c##ats.subscribertype.id = c##ats.subscriber.subtypeid
+left join c##ats.placetype on c##ats.addressnumber.idtypeplace = c##ats.placetype.id 
+where c##ats.subscribertype.name = 'usual'),
+(select count(c##ats.subscriber.id) as total_sub from c##ats.subscriber)
+
+select usual/total_sub
+from (select count(c##ats.subscribertype.name) as usual 
+from c##ats.addressnumber INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id left join c##ats.numbers ON addressnumber.numb = numbers.numberid inner join c##ats.subscribertype on c##ats.subscribertype.id = c##ats.subscriber.subtypeid
+left join c##ats.placetype on c##ats.addressnumber.idtypeplace = c##ats.placetype.id 
+where c##ats.subscribertype.name = 'beneficiary'),
+(select count(c##ats.subscriber.id) as total_sub from c##ats.subscriber)
+
+select usual/total_sub
+from (select count(c##ats.subscribertype.name) as usual 
+from c##ats.addressnumber INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id left join c##ats.numbers ON addressnumber.numb = numbers.numberid inner join c##ats.subscribertype on c##ats.subscribertype.id = c##ats.subscriber.subtypeid
+left join c##ats.placetype on c##ats.addressnumber.idtypeplace = c##ats.placetype.id 
+where c##ats.subscribertype.name = 'usual' and c##ats.address.area = ''),
+(select count(c##ats.subscriber.id) as total_sub from c##ats.subscriber)
+
+select usual/total_sub
+from (select count(c##ats.subscribertype.name) as usual 
+from c##ats.addressnumber INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id left join c##ats.numbers ON addressnumber.numb = numbers.numberid inner join c##ats.subscribertype on c##ats.subscribertype.id = c##ats.subscriber.subtypeid
+left join c##ats.placetype on c##ats.addressnumber.idtypeplace = c##ats.placetype.id 
+where c##ats.subscribertype.name = 'beneficiary' and c##ats.address.area = ''),
+(select count(c##ats.subscriber.id) as total_sub from c##ats.subscriber)
+
+select usual/total_sub
+from (select count(c##ats.subscribertype.name) as usual 
+from c##ats.addressnumber INNER JOIN SUBSCRIBER ON subscriber.adressnumber = addressnumber.id left join c##ats.numbers ON addressnumber.numb = numbers.numberid inner join c##ats.subscribertype on c##ats.subscribertype.id = c##ats.subscriber.subtypeid 
+inner join c##ats.ats on c##ats.ats.atsid = c##ats.numbers.atsid
+inner join c##ats.atstype on c##ats.atstype.typeid = c##ats.ats.typeid
+left join c##ats.placetype on c##ats.addressnumber.idtypeplace = c##ats.placetype.id 
+where c##ats.subscribertype.name = 'usual' and c##ats.addressnumber.area = '' and c##ats.atstype.typename = ''),
+(select count(c##ats.subscriber.id) as total_sub from c##ats.subscriber)
+
+
+7.
+
+ select p.atd 
+FROM (SELECT sum(payments.debt) as sm, ats.atsid as atd
+FROM c##ats.ats left join (C##ATS.NUMBERS left join (c##ats.ADDRESSNUMBER inner JOIN c##ats.SUBSCRIBER ON c##ats.subscriber.adressnumber = c##ats.addressnumber.id)
+ON addressnumber.numb = numbers.numberid INNER JOIN c##ats.PAYMENTS ON c##ats.payments.id = c##ats.subscriber.paymentid) on c##ats.ats.atsid = c##ats.numbers.atsid
+group by ats.atsid) p
+where rownum = 1
+group by p.sm, p.atd;
+
+select p.atd 
+FROM (SELECT count(payments.debt) as sm, ats.atsid as atd
+FROM c##ats.ats left join (C##ATS.NUMBERS left join (c##ats.ADDRESSNUMBER inner JOIN c##ats.SUBSCRIBER ON c##ats.subscriber.adressnumber = c##ats.addressnumber.id)
+ON addressnumber.numb = numbers.numberid INNER JOIN c##ats.PAYMENTS ON c##ats.payments.id = c##ats.subscriber.paymentid) on c##ats.ats.atsid = c##ats.numbers.atsid
+where payments.debt > 0 
+group by ats.atsid) p
+where rownum = 1
+group by p.sm, p.atd;
+
+
+SELECT count(c##ats.intersity_talks.city), c##ats.intersity_talks.city FROM c##ats.intersity_talks
+
+
+АТС, на которых было произведено менее
+ определенного числа внешних звонков

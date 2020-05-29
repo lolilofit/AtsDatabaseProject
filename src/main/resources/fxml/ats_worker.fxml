@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane prefHeight="428.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="javafx_application.repository.component_controllers.AtsWorkerController">
+  <children>
+    <AnchorPane layoutX="0.0" layoutY="0.0" prefHeight="400.0" prefWidth="600.0">
+      <children>
+        <Button layoutX="473.0" layoutY="347.0" mnemonicParsing="false" style="-fx-background-color: #8EAF0C" text="submit" textFill="WHITE" onMouseClicked="#sendMessage"/>
+        <Label layoutX="14.0" layoutY="145.0" prefHeight="33.0" prefWidth="217.0" text="Выбрать должника">
+          <textFill>
+            <Color blue="0.047" green="0.686" red="0.557" fx:id="x1" />
+          </textFill>
+        </Label>
+        <ScrollPane hbarPolicy="AS_NEEDED" layoutX="14.0" layoutY="184.0" pannable="false" prefHeight="195.0" prefWidth="203.0" style="" vbarPolicy="AS_NEEDED" visible="true">
+          <content>
+            <AnchorPane fx:id="Content" minHeight="0.0" minWidth="0.0" prefHeight="195.0" prefWidth="203.0" visible="true">
+              <children>
+                <ListView fx:id="variants" layoutX="-8.0" layoutY="-7.0" prefHeight="264.0" prefWidth="210.0" />
+              </children>
+            </AnchorPane>
+          </content>
+        </ScrollPane>
+        <Label layoutX="15.0" layoutY="32.0" prefHeight="33.0" prefWidth="124.0" text="Вы выбрали:" textFill="$x1" />
+        <Label fx:id="chosenDebtor" layoutX="12.0" layoutY="73.0" prefHeight="33.0" prefWidth="203.0" text="Имя должника" textFill="$x1" />
+        <Button fx:id="find" layoutX="189.0" layoutY="147.0" minWidth="29.0" mnemonicParsing="false" onMouseClicked="#findDebtors" prefWidth="29.0" style="-fx-background-color: #8EAF0C" text="" />
+      </children>
+    </AnchorPane>
+    <TextArea fx:id="message" layoutX="247.0" layoutY="24.0" prefHeight="311.0" prefWidth="321.0" text="Ваше письмо...&#10;" wrapText="true" />
+  </children>
+</AnchorPane>

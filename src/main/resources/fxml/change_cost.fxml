@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="javafx_application.repository.component_controllers.ChangeCostController">
+  <children>
+    <AnchorPane layoutX="0.0" layoutY="0.0" prefHeight="400.0" prefWidth="600.0">
+      <children>
+        <Button layoutX="428.0" layoutY="322.0" mnemonicParsing="false" style="-fx-background-color: #8EAF0C" text="Подтвердить" textFill="WHITE" />
+        <Label layoutX="140.0" layoutY="44.0" text="Изменить стоимость звонков">
+          <font>
+            <Font size="22.0" />
+          </font>
+          <textFill>
+            <Color blue="0.047" green="0.686" red="0.557" fx:id="x1" />
+          </textFill>
+        </Label>
+        <Label layoutX="58.0" layoutY="136.0" text="Стоимость абонентской платы" textFill="$x1" />
+        <Label layoutX="58.0" layoutY="217.0" text="Стоимость междугородних звонков" textFill="$x1" />
+        <TextField fx:id="regPay" layoutX="417.0" layoutY="133.0" prefWidth="124.0" />
+        <TextField fx:id="interPay" layoutX="417.0" layoutY="214.0" prefWidth="124.0" />
+      </children>
+    </AnchorPane>
+  </children>
+</AnchorPane>

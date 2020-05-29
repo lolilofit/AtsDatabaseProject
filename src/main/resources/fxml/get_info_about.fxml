@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="javafx_application.repository.component_controllers.InfoByNumberController">
+  <children>
+    <AnchorPane layoutX="0.0" layoutY="7.0" prefHeight="400.0" prefWidth="600.0">
+      <children>
+        <Label layoutX="188.0" layoutY="39.0" text="Информация о номере">
+          <font>
+            <Font size="22.0" />
+          </font>
+          <textFill>
+            <Color blue="0.047" green="0.686" red="0.557" fx:id="x1" />
+          </textFill>
+        </Label>
+        <Button fx:id="search" layoutX="424.0" layoutY="101.0" mnemonicParsing="false" onMouseClicked="#search" style="-fx-background-color: #8EAF0C" text="Найти!" textFill="WHITE" />
+        <TextField fx:id="numberField" layoutX="90.0" layoutY="103.0" prefWidth="200.0" />
+        <Label layoutX="72.0" layoutY="181.0" text="Имя" textFill="$x1" />
+        <Label fx:id="name" layoutX="208.0" layoutY="183.0" prefWidth="48.0" text="" textFill="$x1" />
+        <Label layoutX="73.0" layoutY="222.0" text="Фамилия" textFill="$x1" />
+        <Label layoutX="73.0" layoutY="265.0" text="Возраст" textFill="$x1" />
+        <Label layoutX="330.0" layoutY="181.0" text="Район" textFill="$x1" />
+        <Label fx:id="secondName" layoutX="208.0" layoutY="222.0" prefWidth="51.0" text="" textFill="$x1" />
+        <Label fx:id="age" layoutX="208.0" layoutY="265.0" prefWidth="59.0" text="" textFill="$x1" />
+        <Label layoutX="337.0" layoutY="222.0" text="Улица" textFill="$x1" />
+        <Label layoutX="337.0" layoutY="265.0" text="Дом" textFill="$x1" />
+        <Label layoutX="337.0" layoutY="308.0" text="Квартира" textFill="$x1" />
+        <Label fx:id="phoneType" layoutX="208.0" layoutY="308.0" prefWidth="59.0" text="" textFill="$x1" />
+        <Label fx:id="area" layoutX="458.0" layoutY="181.0" prefWidth="42.0" text="" textFill="$x1" />
+        <Label fx:id="street" layoutX="467.0" layoutY="222.0" prefWidth="38.0" text="" textFill="$x1" />
+        <Label fx:id="home" layoutX="467.0" layoutY="272.0" prefWidth="69.0" text="" textFill="$x1" />
+        <Label fx:id="flat" layoutX="463.0" layoutY="308.0" prefWidth="73.0" text="" textFill="$x1" />
+        <Label layoutX="73.0" layoutY="308.0" text="Тип телефона" textFill="$x1" />
+      </children>
+    </AnchorPane>
+  </children>
+</AnchorPane>

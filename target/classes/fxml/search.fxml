@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="javafx_application.repository.component_controllers.SearchController">
+  <children>
+    <Pane layoutX="0.0" layoutY="0.0" prefHeight="400.0" prefWidth="600.0">
+      <children>
+        <TextField fx:id="search" layoutX="231.0" layoutY="55.0" onKeyTyped="#inputSearchMethod" onMousePressed="#inputSearchMethod" prefWidth="294.0" />
+        <TextField fx:id="selectedFilters" layoutX="231.0" layoutY="23.0" prefWidth="294.0" />
+        <Label layoutX="38.0" layoutY="31.0" prefWidth="134.0" text="Selected filters:">
+          <textFill>
+            <Color blue="0.047" green="0.686" red="0.557" fx:id="x1" />
+          </textFill>
+        </Label>
+        <ScrollPane hbarPolicy="AS_NEEDED" layoutX="318.0" layoutY="143.0" prefHeight="244.0" prefWidth="267.99995585936995" style="" vbarPolicy="AS_NEEDED">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="242.00009999999747" prefWidth="254.0">
+              <children>
+                <ListView id="variants" fx:id="result" layoutX="-1.0" layoutY="0.0" prefHeight="243.0" prefWidth="254.0" />
+              </children>
+            </AnchorPane>
+          </content>
+        </ScrollPane>
+        <Button id="o" fx:id="handSearch" layoutX="537.0" layoutY="23.0" minHeight="23.94140625" mnemonicParsing="false" onMouseClicked="#removeFilters" prefHeight="23.94140625" style="-fx-background-color: #8EAF0C" text="" />
+        <Label layoutX="38.0" layoutY="62.0" text="Enter filter name" textFill="$x1" />
+        <Button id="o" layoutX="537.0" layoutY="55.0" minHeight="23.94140625" mnemonicParsing="false" onMouseClicked="#doSearch" prefHeight="23.94140625" style="-fx-background-color: #8EAF0C" text="" />
+      </children>
+    </Pane>
+    <ScrollPane hbarPolicy="AS_NEEDED" layoutX="14.0" layoutY="142.0" prefHeight="244.0" prefWidth="278.0" style="" vbarPolicy="ALWAYS">
+      <content>
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="244.0" prefWidth="254.0">
+          <children>
+            <ListView fx:id="variants" layoutX="-8.0" layoutY="1.0" prefHeight="268.0" prefWidth="284.0" />
+          </children>
+        </AnchorPane>
+      </content>
+    </ScrollPane>
+  </children>
+</AnchorPane>

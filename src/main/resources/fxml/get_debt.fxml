@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="javafx_application.repository.component_controllers.DebtInfoController">
+  <children>
+    <AnchorPane layoutX="0.0" layoutY="0.0" prefHeight="400.0" prefWidth="600.0">
+      <children>
+        <Label layoutX="236.0" layoutY="30.0" text="Должники">
+          <font>
+            <Font size="22.0" />
+          </font>
+          <textFill>
+            <Color blue="0.047" green="0.686" red="0.557" fx:id="x1" />
+          </textFill>
+        </Label>
+        <Label layoutX="68.0" layoutY="97.0" text="Номер АТС" textFill="$x1" />
+        <TextField fx:id="atsNumber" layoutX="200.0" layoutY="94.0" prefWidth="94.0" />
+        <Label layoutX="68.0" layoutY="146.0" text="Район" textFill="$x1" />
+        <TextField fx:id="area" layoutX="200.0" layoutY="143.0" prefWidth="94.0" />
+        <CheckBox fx:id="debtWeek" layoutX="68.0" layoutY="200.0" mnemonicParsing="false" prefWidth="232.0" text="Оплата &gt; 37д. назад" textFill="$x1" />
+        <MenuButton fx:id="menu" layoutX="67.0" layoutY="251.0" mnemonicParsing="false" style="-fx-background-color: #8EAF0C" text="Тип Задолженности" textFill="WHITE">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#selectADebt" text="Абон. плата" />
+            <MenuItem mnemonicParsing="false" onAction="#selectIDebt" text="Межгород" />
+          </items>
+        </MenuButton>
+        <Label layoutX="67.0" layoutY="305.0" text="Размер Задолженности" textFill="$x1" />
+        <Label layoutX="68.0" layoutY="334.0" text="от:" textFill="$x1" />
+        <Label layoutX="184.0" layoutY="334.0" text="до:" textFill="$x1" />
+        <TextField id="minVal" fx:id="minDebt" layoutX="109.0" layoutY="331.0" prefWidth="51.0" />
+        <TextField fx:id="maxDebt" layoutX="229.0" layoutY="331.0" prefWidth="51.0" />
+        <ScrollPane layoutX="350.0" layoutY="117.0" prefHeight="200.0" prefWidth="200.0">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+              <children>
+                <ListView fx:id="res" layoutX="0.0" layoutY="0.0" prefHeight="200.0" prefWidth="200.0" />
+              </children>
+            </AnchorPane>
+          </content>
+        </ScrollPane>
+        <Button id="subscriber" fx:id="submit" layoutX="467.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#search" style="-fx-background-color: #8EAF0C" text="Найти" textFill="WHITE" />
+      </children>
+    </AnchorPane>
+  </children>
+</AnchorPane>

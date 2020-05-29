@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="javafx_application.repository.component_controllers.UsualMainController">
+  <children>
+    <Pane layoutX="0.0" layoutY="0.0" prefHeight="400.0" prefWidth="600.0">
+      <children>
+        <Label layoutX="57.0" layoutY="15.0" text="Ваша персональная информация" underline="false">
+          <font>
+            <Font size="22.0" />
+          </font>
+          <textFill>
+            <Color blue="0.047" green="0.686" red="0.557" fx:id="x1" />
+          </textFill>
+        </Label>
+        <Label layoutX="42.0" layoutY="176.0" text="Долг по абонентской плате" textFill="$x1" />
+        <Label fx:id="mountCost" layoutX="292.0" layoutY="176.0" prefWidth="40.0" text="0" textFill="$x1" />
+        <Label layoutX="41.0" layoutY="217.0" text="Долг за межгород" textFill="$x1" />
+        <Label fx:id="mountIntercityCost" layoutX="292.0" layoutY="217.0" prefWidth="39.999900000002526" text="0" textFill="$x1" />
+        <Label layoutX="42.0" layoutY="257.0" prefWidth="162.0" text="Ваш номер" textFill="$x1" />
+        <Label fx:id="number" layoutX="241.0" layoutY="257.0" text="У вас пока что нет номера" textFill="$x1" />
+        <Button fx:id="changeAddr" layoutX="39.0" layoutY="322.0" mnemonicParsing="false" onMouseClicked="#changePersonalInfo" style="-fx-background-color: #8EAF0C" text="Поменять информацию о себе" textFill="WHITE" />
+        <ImageView fitHeight="122.6874769251133" fitWidth="150.99996948242188" layoutX="342.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../telephone.png" />
+          </image>
+        </ImageView>
+        <Button fx:id="logout" layoutX="459.0" layoutY="16.0" mnemonicParsing="false" onMouseClicked="#logout" prefWidth="119.0" style="-fx-background-color: #8EAF0C" text="Выйти" textFill="WHITE" />
+        <CheckBox fx:id="intercityEnabled" layoutX="42.0" layoutY="129.0" mnemonicParsing="false" onMouseClicked="#changeIntercityEnabled" text="Включен ли межгород" textFill="#8eaf0c" />
+        <CheckBox fx:id="serviceEnabled" layoutX="42.0" layoutY="79.0" mnemonicParsing="false" onMouseClicked="#changeServiceEnabled" text="Включены ли услуги" textFill="$x1" />
+        <Button layoutX="460.0" layoutY="59.0" onMouseClicked="#updateInfo" minWidth="28.0" mnemonicParsing="false" prefWidth="119.00002207031503" style="-fx-background-color: #8EAF0C" text="Обновить" textFill="WHITE" />
+      </children>
+    </Pane>
+  </children>
+</AnchorPane>
