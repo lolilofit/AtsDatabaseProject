@@ -41,6 +41,10 @@ public class LoginPageController {
     private TextField loginUp;
     @FXML
     private MenuButton roleMenu;
+    @FXML
+    private Label result;
+    @FXML
+    private Label createResult;
 
 
     private String savedRole;
@@ -55,26 +59,124 @@ public class LoginPageController {
         roleMenu.setText("ats worker");
     }
 
+    public void setAdminRole() {
+        savedRole = "1";
+        roleMenu.setText("admin");
+    }
+
+    private void login(String login, String password) {
+        try {
+            Map<String, String> params = new HashMap<>();
+            params.put("login", "'" + login + "'");
+            params.put("password", "'" + password + "'");
+            Map<String, String> setThis = new HashMap<>();
+            setThis.put("isLoggedIn", "'Y'");
+            Integer id;
+
+
+            crudRepository.update(Logins.getRepresentativeString(), setThis, params);
+            ResultSet resultSet = crudRepository.selectWithWhere(Logins.getRepresentativeString(), params);
+
+            if (resultSet.next()) {
+                params.clear();
+                params.put("id", Integer.toString(resultSet.getInt("ROLE")));
+                id = resultSet.getInt("ID");
+
+                ResultSet findNameResult = crudRepository.selectWithWhere(Roles.getRepresentativeString(), params);
+                findNameResult.next();
+                String role = findNameResult.getString("name");
+                loginInfo.setRole(role);
+                loginInfo.setLoginId(id);
+
+                if (role.equals("USUAL")) {
+                    resultSet = requestPersonalInfo(id, "ADDRESSNUMBER.ID");
+                    resultSet.next();
+                    loginInfo.setSubId(Integer.parseInt(resultSet.getString(1)));
+
+                    loginInfo.setRole("USUAL");
+
+                    String adr = resultSet.getString(2);
+
+                    if (adr != null) {
+                        loginInfo.setAddrId(Integer.parseInt(adr));
+
+                        Optional<DatabaseBeansConfig.View> view = JavaFXComponents.openTab(tabPane, "Main Page", "usualMainPage", viewList);
+                        view.ifPresent(value -> {
+                            UsualMainController usualMainController = (UsualMainController) (value.getController());
+                            try {
+                                usualMainController.updateInfo();
+                                usualMainController.setPane(tabPane);
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        });
+
+
+                        JavaFXComponents.openTab(tabPane, "City Phones", "cityPhones", viewList);
+                        JavaFXComponents.openTab(tabPane, "Get Debt Info", "debtInfo", viewList);
+                        JavaFXComponents.openTab(tabPane, "Get Abonents", "abonentsInfo", viewList);
+                        JavaFXComponents.openTab(tabPane, "Info By Number", "infoByNumber", viewList);
+                        JavaFXComponents.openTab(tabPane, "Search", "searchView", viewList);
+                    } else {
+                        Optional<DatabaseBeansConfig.View> view = JavaFXComponents.openTab(tabPane, "Your Info", "infoView", viewList);
+                        view.ifPresent(value -> ((InfoPageController) (value.getController())).setPane(tabPane));
+                    }
+                    closeLogin();
+                }
+                if (role.equals("WORKER") || role.equals("ADMIN")) {
+                    resultSet = requestPersonalInfo(id, "SUBSCRIBER.NAME");
+                    resultSet.next();
+                    loginInfo.setSubId(Integer.parseInt(resultSet.getString(1)));
+
+                    if (role.equals("ADMIN"))
+                        loginInfo.setRole("ADMIN");
+                    else
+                        loginInfo.setRole("WORKER");
+
+                    if (resultSet.getString(2) != null) {
+                        JavaFXComponents.openTab(tabPane, "ATS Worker", "atsWorker", viewList);
+                        JavaFXComponents.openTab(tabPane, "Search", "searchView", viewList);
+                        JavaFXComponents.openTab(tabPane, "New City Phone", "newCityPhone", viewList);
+                        JavaFXComponents.openTab(tabPane, "City Phones", "cityPhones", viewList);
+                        JavaFXComponents.openTab(tabPane, "Get Debt Info", "debtInfo", viewList);
+                        JavaFXComponents.openTab(tabPane, "Get Abonents", "abonentsInfo", viewList);
+                        JavaFXComponents.openTab(tabPane, "Info By Number", "infoByNumber", viewList);
+                        JavaFXComponents.openTab(tabPane, "Add intercity call", "addIntercityCall", viewList);
+
+
+                        if (role.equals("ADMIN")) {
+                            JavaFXComponents.openTab(tabPane, "Change Costs", "changeCost", viewList);
+                        }
+                    } else {
+                        Optional<DatabaseBeansConfig.View> view = JavaFXComponents.openTab(tabPane, "Your Info", "atsWorkerInfo", viewList);
+                        view.ifPresent(value -> ((InfoAtsWorkerController) (value.getController())).setPane(tabPane));
+                    }
+                    closeLogin();
+                }
+            }
+            else {
+                result.setText("Не удалось");
+                return;
+            }
+        } catch (SQLException | NoSuchMethodException e) {
+            result.setText("Не удалось!");
+            return;
+        }
+        result.setText("");
+    }
+
     public void submitButtonController() {
         Logins logins = new Logins(loginIn.getText(), passwordIn.getText(), "Y", savedRole);
         try {
             crudRepository.insert(Logins.getTableParams(), Logins.getRepresentativeString(), logins.getParams());
         } catch (SQLException | NoSuchMethodException e) {
             e.printStackTrace();
+            createResult.setText("Не удалось");
+            return;
         }
 
-        try {
-            if(savedRole.equals("usual")) {
-                Optional<DatabaseBeansConfig.View> view = JavaFXComponents.openTab(tabPane, "Your Info", "infoView", viewList);
-                view.ifPresent(value -> ((InfoPageController) (value.getController())).setPane(tabPane));
-            }
-            if(savedRole.equals("ats worker")) {
-                Optional<DatabaseBeansConfig.View> view = JavaFXComponents.openTab(tabPane, "Your Info", "atsWorkerInfo", viewList);
-                view.ifPresent(value -> ((InfoAtsWorkerController) (value.getController())).setPane(tabPane));
-            }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+        login(loginIn.getText(), passwordIn.getText());
+        createResult.setText("");
     }
 
     private void closeLogin() {
@@ -91,103 +193,14 @@ public class LoginPageController {
         columns.add("SUBSCID");
         if(!secondColumn.equals(""))
             columns.add(secondColumn);
-        //исправ
+
         return crudRepository.selectWithWhereColumns(
                 "((" + Logins.getRepresentativeString() + " INNER JOIN C##ATS.SUBSCLOGIN ON C##ATS.SUBSCLOGIN.LOGIN = " + Logins.getRepresentativeString() + ".ID )"
                         + "INNER JOIN C##ATS.SUBSCRIBER ON C##ATS.SUBSCRIBER.ID = C##ATS.SUBSCLOGIN.SUBSCID) LEFT JOIN C##ATS.ADDRESSNUMBER ON C##ATS.subscriber.ADRESSNUMBER = C##ATS.ADDRESSNUMBER.ID",
                 params, columns);
     }
 
-    public void submitButtonUpController() throws SQLException, NoSuchMethodException {
-        Map<String, String> params = new HashMap<>();
-        params.put("login", "'" + loginUp.getText() + "'");
-        params.put("password", "'" + passwordUp.getText() + "'");
-        Map<String, String> setThis = new HashMap<>();
-        setThis.put("isLoggedIn", "'Y'");
-        Integer id;
-
-
-            crudRepository.update(Logins.getRepresentativeString(), setThis, params);
-            ResultSet resultSet = crudRepository.selectWithWhere(Logins.getRepresentativeString(), params);
-
-            if(resultSet.next()) {
-                params.clear();
-                params.put("id", Integer.toString(resultSet.getInt("ROLE")));
-                id = resultSet.getInt("ID");
-
-                ResultSet findNameResult = crudRepository.selectWithWhere(Roles.getRepresentativeString(), params);
-                findNameResult.next();
-                String role = findNameResult.getString("name");
-                loginInfo.setRole(role);
-                loginInfo.setLoginId(id);
-
-                if(role.equals("USUAL")) {
-                    resultSet = requestPersonalInfo(id, "ADDRESSNUMBER.ID");
-                    resultSet.next();
-                    loginInfo.setSubId(Integer.parseInt(resultSet.getString(1)));
-
-                    loginInfo.setRole("USUAL");
-
-                    String adr = resultSet.getString(2);
-
-                     if(adr != null) {
-                         loginInfo.setAddrId(Integer.parseInt(adr));
-
-                         Optional<DatabaseBeansConfig.View> view = JavaFXComponents.openTab(tabPane, "Main Page", "usualMainPage", viewList);
-                         view.ifPresent(value -> {
-                             UsualMainController usualMainController = (UsualMainController) (value.getController());
-                             try {
-                                 usualMainController.updateInfo();
-                                 usualMainController.setPane(tabPane);
-                             } catch (SQLException e) {
-                                 e.printStackTrace();
-                             }
-                         });
-
-
-                         JavaFXComponents.openTab(tabPane, "City Phones", "cityPhones", viewList);
-                         JavaFXComponents.openTab(tabPane, "Get Debt Info", "debtInfo", viewList);
-                         JavaFXComponents.openTab(tabPane, "Get Abonents", "abonentsInfo", viewList);
-                         JavaFXComponents.openTab(tabPane, "Info By Number", "infoByNumber", viewList);
-                         JavaFXComponents.openTab(tabPane, "Search", "searchView", viewList);
-                         closeLogin();
-                     }
-                     else {
-                         Optional<DatabaseBeansConfig.View> view = JavaFXComponents.openTab(tabPane, "Your Info", "infoView", viewList);
-                         view.ifPresent(value -> ((InfoPageController) (value.getController())).setPane(tabPane));
-                     }
-                }
-                if(role.equals("WORKER") || role.equals("ADMIN")) {
-                    resultSet = requestPersonalInfo(id, "SUBSCRIBER.NAME");
-                    resultSet.next();
-                    loginInfo.setSubId(Integer.parseInt(resultSet.getString(1)));
-
-                    loginInfo.setRole("WORKER");
-
-                    if(resultSet.getString(2) != null) {
-                        JavaFXComponents.openTab(tabPane, "ATS Worker", "atsWorker", viewList);
-                        JavaFXComponents.openTab(tabPane, "Search", "searchView", viewList);
-                        JavaFXComponents.openTab(tabPane, "New City Phone", "newCityPhone", viewList);
-                        JavaFXComponents.openTab(tabPane, "City Phones", "cityPhones", viewList);
-                        JavaFXComponents.openTab(tabPane, "Get Debt Info", "debtInfo", viewList);
-                        JavaFXComponents.openTab(tabPane, "Get Abonents", "abonentsInfo", viewList);
-                        JavaFXComponents.openTab(tabPane, "Info By Number", "infoByNumber", viewList);
-                        JavaFXComponents.openTab(tabPane, "Add intercity call", "addIntercityCall", viewList);
-
-
-                        if(role.equals("ADMIN")) {
-                            JavaFXComponents.openTab(tabPane, "Change Costs", "changeCost", viewList);
-                        }
-                    }
-                    else {
-                        Optional<DatabaseBeansConfig.View> view = JavaFXComponents.openTab(tabPane, "Your Info", "atsWorkerInfo", viewList);
-                        view.ifPresent(value -> ((InfoAtsWorkerController) (value.getController())).setPane(tabPane));
-                    }
-                    closeLogin();
-                }
-            }
+    public void submitButtonUpController() {
+        login(loginUp.getText(), passwordUp.getText());
     }
-
-
-
 }

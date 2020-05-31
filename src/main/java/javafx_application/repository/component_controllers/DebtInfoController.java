@@ -97,12 +97,7 @@ public class DebtInfoController {
             whereClause.append("sysdate - 37 > c##ats.LASTPAYMENT");
         }
 
-        System.out.println("SELECT c##ats.subscriber.name, c##ats.subscriber.name FROM (C##ATS.NUMBERS " +
-                "left join (c##ats.ADDRESSNUMBER INNER JOIN c##ats.SUBSCRIBER ON c##ats.subscriber.adressnumber = c##ats.addressnumber.id) ON addressnumber.numb = numbers.numberid " +
-                "INNER JOIN c##ats.PAYMENTS ON c##ats.payments.id = c##ats.subscriber.paymentid)" +
-                " where " + whereClause.toString());
-
-        ResultSet resultSet = crudRepository.executeQuery("SELECT c##ats.subscriber.name, c##ats.subscriber.name FROM (C##ATS.NUMBERS " +
+        ResultSet resultSet = crudRepository.executeQuery("SELECT c##ats.subscriber.name, c##ats.subscriber.second_name FROM (C##ATS.NUMBERS " +
                 "left join (c##ats.ADDRESSNUMBER INNER JOIN c##ats.SUBSCRIBER ON c##ats.subscriber.adressnumber = c##ats.addressnumber.id) ON addressnumber.numb = numbers.numberid " +
                 "INNER JOIN c##ats.PAYMENTS ON c##ats.payments.id = c##ats.subscriber.paymentid)" +
                 " where " + whereClause.toString());

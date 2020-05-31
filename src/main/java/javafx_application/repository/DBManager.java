@@ -17,15 +17,18 @@ public class DBManager {
     private String connectionURL;
     private String password;
     private String username;
-    //private Map<String, Map<String, Class>> databaseInfo;
+
 
     public void readConnectionInfo() throws IOException {
-        InputStream input = new FileInputStream("src/main/resources/databaseConnectionConfig.properties");
-        Properties prop = new Properties();
-        prop.load(input);
-        connectionURL = prop.getProperty("connectionURL");
-        password = prop.getProperty("password");
-        username = prop.getProperty("username");
+        //InputStream input = new FileInputStream("src/main/resources/db/databaseConnectionConfig.properties");
+        //Properties prop = new Properties();
+        //prop.load(input);
+        //connectionURL = prop.getProperty("connectionURL");
+        //password = prop.getProperty("password");
+        //username = prop.getProperty("username");
+        connectionURL = "jdbc:oracle:thin:@localhost:1521:XE";
+        username = "C##ATS";
+        password = "12345";
     }
 /*
     void initDatabaseInfo() {

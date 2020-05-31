@@ -93,7 +93,8 @@ public class AbonentsInfoController {
         if(parPhone.isSelected()) {
             if(notNullParam > 0)
                 whereClause.append(" and ");
-            whereClause.append("c##ats.teltype.name = parallel");
+            whereClause.append("c##ats.telephonetype.name = 'parallel'");
+            notNullParam++;
         }
         String clType;
         if(clientType.isSelected())

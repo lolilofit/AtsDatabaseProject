@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.UnaryOperator;
 
 
@@ -81,9 +82,6 @@ public class InfoPageController {
         params.put("ID", loginInfo.getSubId().toString());
 
         crudRepository.update(Subscriber.getRepresentativeString(), setThis, params);
-
-        JavaFXComponents.openTab(tabPane, "ATS Worker", "atsWorker", viewList);
-        JavaFXComponents.openTab(tabPane, "Search", "searchView", viewList);
     }
 
     public void menuBoxClick() {
@@ -129,12 +127,26 @@ public class InfoPageController {
                 setThis.put("SUBTYPEID", "2");
             else
                 setThis.put("SUBTYPEID", "1");
-            //льгтник
+           
             crudRepository.update(Subscriber.getRepresentativeString(), setThis, params);
 
             submitName();
 
-            JavaFXComponents.openTab(tabPane, "Main Page", "usualMainPage", viewList);
+            Optional<DatabaseBeansConfig.View> view = JavaFXComponents.openTab(tabPane, "Main Page", "usualMainPage", viewList);
+            view.ifPresent(value -> {
+                UsualMainController usualMainController = (UsualMainController) (value.getController());
+                try {
+                    usualMainController.updateInfo();
+                    usualMainController.setPane(tabPane);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            JavaFXComponents.openTab(tabPane, "City Phones", "cityPhones", viewList);
+            JavaFXComponents.openTab(tabPane, "Get Debt Info", "debtInfo", viewList);
+            JavaFXComponents.openTab(tabPane, "Get Abonents", "abonentsInfo", viewList);
+            JavaFXComponents.openTab(tabPane, "Info By Number", "infoByNumber", viewList);
             JavaFXComponents.openTab(tabPane, "Search", "searchView", viewList);
 
         } catch (SQLException | NoSuchMethodException e) {

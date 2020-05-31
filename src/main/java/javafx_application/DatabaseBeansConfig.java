@@ -18,7 +18,7 @@ public class DatabaseBeansConfig {
 
     @Bean(name = "addIntercityCall")
     public View getAddIntercityCall() throws IOException {
-        return loadView("addIntercityCall","/fxml/add_intercity_call.fxml");
+        return loadView("addIntercityCall", "/db/fxml/add_intercity_call.fxml");
     }
 
     @Bean
@@ -28,7 +28,7 @@ public class DatabaseBeansConfig {
 
     @Bean(name = "cityPhones")
     public View getCityPhones() throws  IOException {
-        return loadView("cityPhones","/fxml/city_phones.fxml");
+        return loadView("cityPhones", "/db/fxml/city_phones.fxml");
     }
 
     @Bean
@@ -38,7 +38,7 @@ public class DatabaseBeansConfig {
 
     @Bean(name = "debtInfo")
     public View getDebtInfo() throws  IOException {
-        return loadView("debtInfo","/fxml/get_debt.fxml");
+        return loadView("debtInfo", "/db/fxml/get_debt.fxml");
     }
 
     @Bean
@@ -48,7 +48,7 @@ public class DatabaseBeansConfig {
 
     @Bean(name = "abonentsInfo")
     public View getAbonentsInfo() throws  IOException {
-        return loadView("abonentsInfo","/fxml/get_abonents.fxml");
+        return loadView("abonentsInfo", "/db/fxml/get_abonents.fxml");
     }
 
     @Bean
@@ -58,7 +58,7 @@ public class DatabaseBeansConfig {
 
         @Bean(name = "infoByNumber")
     public View getInfoByNumber() throws  IOException {
-        return loadView("infoByNumber","/fxml/get_info_about.fxml");
+        return loadView("infoByNumber", "/db/fxml/get_info_about.fxml");
     }
 
     @Bean
@@ -69,7 +69,7 @@ public class DatabaseBeansConfig {
 
     @Bean(name = "сhangeCost")
     public View getChangeCost() throws  IOException {
-        return loadView("сhangeCost","/fxml/change_cost.fxml");
+        return loadView("сhangeCost", "/db/fxml/change_cost.fxml");
     }
 
     @Bean
@@ -79,7 +79,7 @@ public class DatabaseBeansConfig {
 
     @Bean(name = "newCityPhone")
     public View getNewCityPhone() throws  IOException {
-        return loadView("newCityPhone","/fxml/new_city_phone.fxml");
+        return loadView("newCityPhone", "/db/fxml/new_city_phone.fxml");
     }
 
     @Bean
@@ -89,7 +89,7 @@ public class DatabaseBeansConfig {
 
     @Bean(name = "atsWorkerInfo")
     public View getAtsWorkerInfo() throws  IOException {
-        return loadView("atsWorkerInfo","/fxml/ats_worker_info.fxml");
+        return loadView("atsWorkerInfo", "/db/fxml/ats_worker_info.fxml");
     }
 
     @Bean
@@ -99,7 +99,7 @@ public class DatabaseBeansConfig {
 
     @Bean(name = "atsWorker")
     public View getAtsWorker() throws  IOException {
-        return loadView("atsWorker","/fxml/ats_worker.fxml");
+        return loadView("atsWorker", "/db/fxml/ats_worker.fxml");
     }
 
     @Bean
@@ -109,7 +109,7 @@ public class DatabaseBeansConfig {
 
     @Bean(name = "searchView")
     public View getSearchView() throws  IOException {
-        return loadView("searchView","/fxml/search.fxml");
+        return loadView("searchView", "/db/fxml/search.fxml");
     }
 
     @Bean
@@ -119,7 +119,7 @@ public class DatabaseBeansConfig {
 
     @Bean(name = "loginPage")
     public View getLoginView() throws  IOException {
-        return loadView("loginView","/fxml/login.fxml");
+        return loadView("loginView", "/db/fxml/login.fxml");
     }
 
     @Bean
@@ -129,7 +129,7 @@ public class DatabaseBeansConfig {
 
     @Bean(name = "infoView")
     public View getInfoView() throws  IOException {
-        return loadView("infoView","/fxml/sub_info.fxml");
+        return loadView("infoView", "/db/fxml/sub_info.fxml");
     }
     @Bean
     public InfoPageController getInfoPageController() throws IOException {
@@ -142,7 +142,7 @@ public class DatabaseBeansConfig {
 
     @Bean(name = "usualMainPage")
     public View getUsualMainPageView() throws  IOException {
-        return loadView("usualMainPage","/fxml/usual_user_main.fxml");
+        return loadView("usualMainPage", "/db/fxml/usual_user_main.fxml");
     }
     @Bean
     public UsualMainController getUsualMainPageController() throws IOException {

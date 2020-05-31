@@ -46,5 +46,15 @@ public class InfoAtsWorkerController {
 
         JavaFXComponents.openTab(tabPane, "ATS Worker", "atsWorker", viewList);
         JavaFXComponents.openTab(tabPane, "Search", "searchView", viewList);
+        JavaFXComponents.openTab(tabPane, "New City Phone", "newCityPhone", viewList);
+        JavaFXComponents.openTab(tabPane, "City Phones", "cityPhones", viewList);
+        JavaFXComponents.openTab(tabPane, "Get Debt Info", "debtInfo", viewList);
+        JavaFXComponents.openTab(tabPane, "Get Abonents", "abonentsInfo", viewList);
+        JavaFXComponents.openTab(tabPane, "Info By Number", "infoByNumber", viewList);
+        JavaFXComponents.openTab(tabPane, "Add intercity call", "addIntercityCall", viewList);
+
+        if(loginInfo.getRole().equals("Admin")) {
+            JavaFXComponents.openTab(tabPane, "Change Costs", "changeCost", viewList);
+        }
     }
 }
