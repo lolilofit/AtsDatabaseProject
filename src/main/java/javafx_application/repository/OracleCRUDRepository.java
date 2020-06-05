@@ -23,7 +23,7 @@ public class OracleCRUDRepository implements  CRUDRepository {
 
     @Override
     public ResultSet insert(Map<String, Class> tableParams, String tablename, Map<String, String> params)
-            throws SQLException, NoSuchMethodException {
+            throws SQLException {
         if(params.size() == 0) {
             throw new SQLException();
         }
@@ -48,19 +48,17 @@ public class OracleCRUDRepository implements  CRUDRepository {
                 query.append(", " + params.get(keys.get(i)));
         }
         query.append(")");
-        System.out.println("MAKE QUERY : " + query.toString());
+
         Statement statement = dBManager.getConnection().createStatement();
 
-        ResultSet resultSet = statement.executeQuery(query.toString());
-        return resultSet;
+        return statement.executeQuery(query.toString());
     }
 
     @Override
     public ResultSet selectAllInColumn(String tableName, String columnName) throws SQLException {
         String query = "SELECT " + columnName + " FROM " + tableName;
         Statement statement = dBManager.getConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery(query);
-        return resultSet;
+        return statement.executeQuery(query);
     }
 
     @Override

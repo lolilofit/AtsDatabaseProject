@@ -4,17 +4,14 @@ package javafx_application.repository.component_controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx_application.DatabaseBeansConfig;
 import javafx_application.repository.CRUDRepository;
 import javafx_application.repository.DBManager;
-import javafx_application.repository.LoginInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 @Component
 @ComponentScan(basePackageClasses = DBManager.class)

@@ -35,7 +35,6 @@
                       <items>
                         <MenuItem mnemonicParsing="false" onAction="#setAtsWorkerRole" style="" text="Работник АТС" />
                         <MenuItem mnemonicParsing="false" onAction="#setUsualRole" style="" text="Обычный" />
-                        <MenuItem mnemonicParsing="false" onAction="#setAdminRole" style="" text="Администратор" />
                       </items>
                     </MenuButton>
                     <Label id="result" fx:id="createResult" layoutX="284.0" layoutY="291.0" prefWidth="100.0" text=" " textFill="#8eaf0c" />

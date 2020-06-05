@@ -1,14 +1,11 @@
 package javafx_application.repository.component_controllers;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx_application.repository.CRUDRepository;
 import javafx_application.repository.DBManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
@@ -57,12 +54,7 @@ public class NewCityPhoneController {
         while(resultSet.next()) {
             MenuItem item = new MenuItem();
             item.setText(resultSet.getString(1));
-            item.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    menuItemHandler(item);
-                }
-            });
+            item.setOnAction(event -> menuItemHandler(item));
             atsId.getItems().add(item);
         }
     }

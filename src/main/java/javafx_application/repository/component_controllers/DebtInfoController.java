@@ -4,7 +4,10 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.TextField;
 import javafx_application.DatabaseBeansConfig;
 import javafx_application.repository.CRUDRepository;
 import javafx_application.repository.DBManager;
@@ -13,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
-import javax.xml.soap.Text;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -42,11 +44,12 @@ public class DebtInfoController {
     @FXML
     private TextField maxDebt;
     @FXML
-    private ListView res;
+    private ListView<String> res;
     @FXML
     private MenuButton menu;
 
     private String selectingDebt;
+    private static String and = " and ";
 
     public void selectADebt() {
         selectingDebt = "c##ats.payments.debt";
@@ -57,16 +60,15 @@ public class DebtInfoController {
         menu.setText("Межгород");
     }
 
-    private void setNewViewList(javafx.scene.control.ListView listView, List<String> list) {
-        Platform.runLater(new Runnable() {
-            @Override public void run() {
-                ObservableList<String> langs;
-                if (list.size() == 0)
-                    langs = FXCollections.observableArrayList("");
-                else
-                    langs = FXCollections.observableArrayList(list);
-                listView.setItems(langs);
-            }});
+    private void setNewViewList(javafx.scene.control.ListView<String> listView, List<String> list) {
+        Platform.runLater(() -> {
+            ObservableList<String> langs;
+            if (list.isEmpty())
+                langs = FXCollections.observableArrayList("");
+            else
+                langs = FXCollections.observableArrayList(list);
+            listView.setItems(langs);
+        });
 
     }
 
@@ -74,27 +76,27 @@ public class DebtInfoController {
         StringBuilder whereClause = new StringBuilder();
 
         if(!minDebt.getText().equals("")) {
-            whereClause.append(selectingDebt + " > " + minDebt.getText() );
+            whereClause.append(selectingDebt).append(" > ").append(minDebt.getText());
         }
         else {
-            whereClause.append(selectingDebt + " > " + "0");
+            whereClause.append(selectingDebt).append(" > ").append("0");
         }
 
         if(!maxDebt.getText().equals("")) {
-            whereClause.append(" and " + selectingDebt + " < " + maxDebt.getText() );
+            whereClause.append(and).append(selectingDebt).append(" < ").append(maxDebt.getText());
         }
 
         if(!atsNumber.getText().equals("")) {
-            whereClause.append(" and ");
-            whereClause.append("c##ats.numbers.atsid = " + atsNumber.getText());
+            whereClause.append(and);
+            whereClause.append("c##ats.numbers.atsid = ").append(atsNumber.getText());
         }
         if(!area.getText().equals("")) {
-            whereClause.append(" and ");
-            whereClause.append("c##ats.ADDRESSNUMBER.area = '" + area.getText()+ "'");
+            whereClause.append(and);
+            whereClause.append("c##ats.ADDRESSNUMBER.area = '").append(area.getText()).append("'");
         }
         if(debtWeek.isSelected()) {
-            whereClause.append(" and ");
-            whereClause.append("sysdate - 37 > c##ats.LASTPAYMENT");
+            whereClause.append(and);
+            whereClause.append("sysdate - 37 > c##ats.PAYMENTS.LASTPAYMENT");
         }
 
         ResultSet resultSet = crudRepository.executeQuery("SELECT c##ats.subscriber.name, c##ats.subscriber.second_name FROM (C##ATS.NUMBERS " +

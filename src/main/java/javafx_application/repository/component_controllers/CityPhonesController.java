@@ -30,18 +30,17 @@ public class CityPhonesController {
     @FXML
     private TextField area;
     @FXML
-    private ListView res;
+    private ListView<String> res;
 
-    private void setNewViewList(javafx.scene.control.ListView listView, List<String> list) {
-        Platform.runLater(new Runnable() {
-            @Override public void run() {
-                ObservableList<String> langs;
-                if (list.size() == 0)
-                    langs = FXCollections.observableArrayList("");
-                else
-                    langs = FXCollections.observableArrayList(list);
-                listView.setItems(langs);
-            }});
+    private void setNewViewList(javafx.scene.control.ListView<String> listView, List<String> list) {
+        Platform.runLater(() -> {
+            ObservableList<String> langs;
+            if (list.isEmpty())
+                langs = FXCollections.observableArrayList("");
+            else
+                langs = FXCollections.observableArrayList(list);
+            listView.setItems(langs);
+        });
 
     }
 

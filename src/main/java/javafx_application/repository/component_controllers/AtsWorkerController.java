@@ -3,10 +3,11 @@ package javafx_application.repository.component_controllers;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx_application.repository.CRUDRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,7 +22,7 @@ public class AtsWorkerController {
     private CRUDRepository crudRepository;
 
     @FXML
-    private ListView variants;
+    private ListView<Button> variants;
     @FXML
     private Label chosenDebtor;
     @FXML
@@ -36,16 +37,15 @@ public class AtsWorkerController {
 
     Map<Button, Integer> debtors = new HashMap<>();
 
-    private void setNewViewList(ListView listView, List<Button> list) {
-        Platform.runLater(new Runnable() {
-            @Override public void run() {
-                ObservableList<Button> langs;
-                if (list.size() == 0)
-                    langs = FXCollections.observableArrayList();
-                else
-                    langs = FXCollections.observableArrayList(list);
-                listView.setItems(langs);
-            }});
+    private void setNewViewList(ListView<Button> listView, List<Button> list) {
+        Platform.runLater(() -> {
+            ObservableList<Button> langs;
+            if (list.isEmpty())
+                langs = FXCollections.observableArrayList();
+            else
+                langs = FXCollections.observableArrayList(list);
+            listView.setItems(langs);
+        });
 
     }
 
@@ -59,12 +59,9 @@ public class AtsWorkerController {
             Button button = new Button(resultSet.getString(1) + " " + resultSet.getString(2));
             button.setStyle("-fx-background-color: WHITE");
 
-            button.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    savedPaymentId = debtors.get(button);
-                    chosenDebtor.setText(button.getText());
-                }
+            button.setOnMouseClicked(event -> {
+                savedPaymentId = debtors.get(button);
+                chosenDebtor.setText(button.getText());
             });
 
             debtors.put(button, resultSet.getInt(3));
@@ -74,8 +71,6 @@ public class AtsWorkerController {
     }
 
     public void sendMessage() throws SQLException {
-        //crudRepository.executeQuery("UPDATE C##ATS.payments SET payments.MESSAGE = '" + message.getText() + "' WHERE payments.id = " + savedPaymentId.toString());
-       // crudRepository.executeQuery("UPDATE C##ATS.PAYMENTS SET C##ATS.PAYMENTS.MESSAGE = 'upd' WHERE C##ATS.PAYMENTS.id = 27");
         Map<String, String> setThis = new HashMap<>();
         Map<String, String> params = new HashMap<>();
 

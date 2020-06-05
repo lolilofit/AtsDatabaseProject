@@ -45,22 +45,23 @@ public class AbonentsInfoController {
     @FXML
     private CheckBox clientType;
     @FXML
-    private ListView res;
+    private ListView<String> res;
     @FXML
     private Label resCount;
     @FXML
     private CheckBox parPhone;
 
-    private void setNewViewList(javafx.scene.control.ListView listView, List<String> list) {
-        Platform.runLater(new Runnable() {
-            @Override public void run() {
-                ObservableList<String> langs;
-                if (list.size() == 0)
-                    langs = FXCollections.observableArrayList("");
-                else
-                    langs = FXCollections.observableArrayList(list);
-                listView.setItems(langs);
-            }});
+    private static String and = " and ";
+
+    private void setNewViewList(javafx.scene.control.ListView<String> listView, List<String> list) {
+        Platform.runLater(() -> {
+            ObservableList<String> langs;
+            if (list.isEmpty())
+                langs = FXCollections.observableArrayList("");
+            else
+                langs = FXCollections.observableArrayList(list);
+            listView.setItems(langs);
+        });
 
     }
 
@@ -74,25 +75,25 @@ public class AbonentsInfoController {
         }
         if(!atsNumber.getText().equals("")) {
             if(notNullParam > 0)
-                whereClause.append(" and ");
+                whereClause.append(and);
             whereClause.append("C##ATS.NUMBERS.atsid = ").append(atsNumber.getText());
             notNullParam++;
         }
         if(!minAge.getText().equals("")) {
             if(notNullParam > 0)
-                whereClause.append(" and ");
+                whereClause.append(and);
             whereClause.append("c##ats.subscriber.age >").append(minAge.getText());
             notNullParam++;
         }
-        if(!maxAge.getText().equals("")) {
+        if(!maxAge.getText().equals(and)) {
             if(notNullParam > 0)
-                whereClause.append(" and ");
+                whereClause.append(and);
             whereClause.append("c##ats.subscriber.age <").append(maxAge.getText());
             notNullParam++;
         }
         if(parPhone.isSelected()) {
             if(notNullParam > 0)
-                whereClause.append(" and ");
+                whereClause.append(and);
             whereClause.append("c##ats.telephonetype.name = 'parallel'");
             notNullParam++;
         }
@@ -102,7 +103,7 @@ public class AbonentsInfoController {
         else
             clType = "'usual'";
         if(notNullParam > 0)
-            whereClause.append(" and ");
+            whereClause.append(and);
         whereClause.append("c##ats.subscribertype.name = ").append(clType);
 
         ResultSet resultSet = crudRepository.executeQuery("select c##ats.subscriber.name, c##ats.subscriber.second_name" +

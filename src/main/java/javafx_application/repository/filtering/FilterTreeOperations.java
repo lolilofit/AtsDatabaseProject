@@ -33,7 +33,7 @@ public class FilterTreeOperations {
         groupBy.add(Arrays.asList(group.split(";")));
     }
 
-    {
+    public FilterTreeOperations() {
         Map<String, String> atsNodeParams = new HashMap<>();
         fillTreeNode("", atsNodeParams, "Поиск по АТС", ATS.getRepresentativeString(),
                 ATS.getRepresentativeString() + ".ATSID", "", "ATS.ATSID");
@@ -133,7 +133,7 @@ public class FilterTreeOperations {
 
     public void searchInTree(List<String> filters) {
         SearchTree cur = searchTree;
-        if(filters.size() == 0) {
+        if(filters.isEmpty()) {
             currentNode = searchTree;
             return;
         }
@@ -149,14 +149,14 @@ public class FilterTreeOperations {
                 else currentNode = null;
                 return;
             }
-            for(Pair<String, SearchTree> entry : currentNode.getChildrens()) {
-                if(entry.getValue().getFilter().getName().equals(filters.get(i))) {
-                    cur = entry.getValue();
-                    continue;
+            if(currentNode != null) {
+                for (Pair<String, SearchTree> entry : currentNode.getChildrens()) {
+                    if (entry.getValue().getFilter().getName().equals(filters.get(i))) {
+                        continue;
+                    }
                 }
             }
             currentNode = null;
-            return;
         }
     }
 }

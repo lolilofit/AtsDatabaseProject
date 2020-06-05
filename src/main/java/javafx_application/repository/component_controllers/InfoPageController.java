@@ -7,7 +7,6 @@ import javafx_application.repository.CRUDRepository;
 import javafx_application.repository.DBManager;
 import javafx_application.repository.LoginInfo;
 import javafx_application.repository.tables.ats.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
@@ -49,7 +48,7 @@ public class InfoPageController {
     @FXML
     private TextField name;
     @FXML
-    private TextField second_name;
+    private TextField secondName;
 
     private TabPane tabPane;
 
@@ -61,8 +60,8 @@ public class InfoPageController {
 
 
     public void setPane(TabPane pane) {
-        //namesParams = Addressnumber.getTableParams();
-        this.tabPane = pane; }
+        this.tabPane = pane;
+    }
 
 
     MenuItem buttonHandler(MenuItem item) {
@@ -72,12 +71,12 @@ public class InfoPageController {
         return item;
     }
 
-    public void submitName() throws SQLException, NoSuchMethodException {
+    public void submitName() throws SQLException {
         Map<String, String> setThis = new HashMap<>();
         Map<String, String> params = new HashMap<>();
 
         setThis.put("NAME", "'" + name.getText() + "'");
-        setThis.put("SECOND_NAME", "'" +second_name.getText() + "'");
+        setThis.put("SECOND_NAME", "'" + secondName.getText() + "'");
 
         params.put("ID", loginInfo.getSubId().toString());
 
@@ -127,7 +126,7 @@ public class InfoPageController {
                 setThis.put("SUBTYPEID", "2");
             else
                 setThis.put("SUBTYPEID", "1");
-           
+
             crudRepository.update(Subscriber.getRepresentativeString(), setThis, params);
 
             submitName();

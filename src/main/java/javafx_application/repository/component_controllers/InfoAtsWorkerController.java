@@ -21,7 +21,7 @@ public class InfoAtsWorkerController {
     @FXML
     private TextField name;
     @FXML
-    private TextField second_name;
+    private TextField secondName;
     private TabPane tabPane;
 
     @Autowired
@@ -38,7 +38,7 @@ public class InfoAtsWorkerController {
         Map<String, String> params = new HashMap<>();
 
         setThis.put("NAME", "'" + name.getText() + "'");
-        setThis.put("SECOND_NAME", "'" +second_name.getText() + "'");
+        setThis.put("SECOND_NAME", "'" + secondName.getText() + "'");
 
         params.put("ID", loginInfo.getSubId().toString());
 

@@ -20,7 +20,7 @@
         <Button id="submitInfo" fx:id="submit" layoutX="405.0" layoutY="319.0" mnemonicParsing="false" onMouseClicked="#submitAtsWorkerInfo" style="-fx-background-color: #8EAF0C" text="Подтвердить" textFill="WHITE" />
         <Label layoutX="168.0" layoutY="138.0" text="Имя" textFill="$x1" />
         <Label layoutX="168.0" layoutY="210.0" text="Фамилия" textFill="$x1" />
-        <TextField fx:id="second_name" layoutX="300.0" layoutY="210.0" prefWidth="125.0" />
+        <TextField fx:id="secondName" layoutX="300.0" layoutY="210.0" prefWidth="125.0" />
         <TextField id="namr" fx:id="name" layoutX="300.0" layoutY="138.0" prefWidth="125.0" />
       </children>
     </Pane>

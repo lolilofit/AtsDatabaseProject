@@ -40,7 +40,7 @@
         <CheckBox fx:id="lgot" indeterminate="false" layoutX="379.0" layoutY="216.0" mnemonicParsing="false" selected="false" styleClass="null" text="Льготник" textFill="$x2" />
         <Label layoutX="49.0" layoutY="75.0" text="Имя" textFill="$x2" />
         <Label layoutX="49.0" layoutY="113.0" text="Фамилия" textFill="$x2" />
-        <TextField fx:id="second_name" layoutX="151.0" layoutY="113.0" prefWidth="125.0" />
+        <TextField fx:id="secondName" layoutX="151.0" layoutY="113.0" prefWidth="125.0" />
         <TextField fx:id="name" layoutX="151.0" layoutY="75.0" prefWidth="125.0" />
       </children>
     </Pane>

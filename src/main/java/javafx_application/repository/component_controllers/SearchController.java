@@ -1,8 +1,6 @@
 package javafx_application.repository.component_controllers;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +15,7 @@ import javafx_application.repository.filtering.SearchTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -35,50 +34,51 @@ public class SearchController {
     @FXML
     private TextField selectedFilters;
     @FXML
-    private ListView variants;
+    private ListView<String> variants;
     @FXML
-    private ListView result;
+    private ListView<String> result;
 
     private List<String> savedFilters = new ArrayList<>();
 
-    private void setNewViewList(ListView listView, List<String> list) {
-        Platform.runLater(new Runnable() {
-            @Override public void run() {
-                ObservableList<String> langs;
-                List<String> notNullList = list.stream().filter(el -> !el.equals("null ")).collect(Collectors.toList());
+    private static final String GROUP_BY = " GROUP BY ";
 
-                if (notNullList.size() == 0)
-                    langs = FXCollections.observableArrayList("");
-                else
-                    langs = FXCollections.observableArrayList(notNullList);
-                listView.setItems(langs);
-            }});
+    private void setNewViewList(ListView<String> listView, List<String> list) {
+        Platform.runLater(() -> {
+            ObservableList<String> langs;
+            List<String> notNullList = list.stream().filter(el -> !el.equals("null ")).collect(Collectors.toList());
+
+            if (notNullList.isEmpty())
+                langs = FXCollections.observableArrayList("");
+            else
+                langs = FXCollections.observableArrayList(notNullList);
+            listView.setItems(langs);
+        });
 
     }
     public void inputSearchMethod() {
         setNewViewList(variants, tree.findByString(search.getText()));
 
-        variants.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-                    @Override
-                    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                        if(newValue == null) return;
-                        if(newValue.toString().equals(""))
-                            return;
+        variants.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue == null) return;
+            if(newValue.equals(""))
+                return;
 
-                        String addThis = tree.findAndSetTree(
-                                newValue.toString()
-                        );
-                        if(!addThis.equals("")) {
-                            savedFilters.add(addThis);
-                            selectedFilters.setText(selectedFilters.getText() + ";" + addThis);
-                        }
-                        setNewViewList(variants, tree.findByString(search.getText()));
-                    }
-                });
+            String addThis = tree.findAndSetTree(newValue);
+
+            if(!addThis.equals("")) {
+                savedFilters.add(addThis);
+                selectedFilters.setText(selectedFilters.getText() + ";" + addThis);
+            }
+            setNewViewList(variants, tree.findByString(search.getText()));
+        });
     }
 
     public void removeFilters() {
-        List<String> newfilters = Arrays.stream(selectedFilters.getText().split(";")).filter(str -> {return !str.equals("");}).collect(Collectors.toList());
+        List<String> newfilters = Arrays.stream(selectedFilters.getText()
+                .split(";"))
+                .filter(str -> !str.equals(""))
+                .collect(Collectors.toList()
+                );
         savedFilters = newfilters;
         tree.searchInTree(newfilters);
         setNewViewList(variants, tree.findByString(search.getText()));
@@ -95,7 +95,7 @@ public class SearchController {
         query.append("SELECT ");
         fromClause.append("FROM ");
         whereClause.append("WHERE ");
-        groupBy.append("GROUP BY ");
+        groupBy.append(GROUP_BY);
 
         int savedfiltersSize  = savedFilters.size();
         String connectingTablesStatement = "";
@@ -143,11 +143,11 @@ public class SearchController {
                     }
                 }
 
-                if(searchTree.getFilter().getGroupBy().size() != 0) {
+                if(searchTree.getFilter().getGroupBy().isEmpty()) {
                     List<String> group = searchTree.getFilter().getGroupBy();
                     for(int k = 0; k < group.size(); k++) {
                         if(!group.get(k).equals("")) {
-                            if (!groupBy.toString().equals("GROUP BY ")) {
+                            if (!groupBy.toString().equals(GROUP_BY)) {
                                 groupBy.append(", ").append(group.get(k));
                             } else {
                                 groupBy.append(group.get(k));
@@ -159,7 +159,7 @@ public class SearchController {
         query.append(fromClause.toString());
         if(!whereClause.toString().equals("WHERE "))
             query.append(whereClause.toString());
-        if(!groupBy.toString().equals("GROUP BY "))
+        if(!groupBy.toString().equals(GROUP_BY))
             query.append(groupBy.toString());
 
         try {

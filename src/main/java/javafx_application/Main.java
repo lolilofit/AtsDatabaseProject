@@ -20,7 +20,7 @@ public class Main extends Application {
         ApplicationContext context = new AnnotationConfigApplicationContext(DatabaseBeansConfig.class);
         DatabaseBeansConfig.View salesmanView = (DatabaseBeansConfig.View) context.getBean("loginPage");
 
-        Parent root = salesmanView.getView();
+        Parent root = salesmanView.getParent();
         VBox layout = new VBox(root);
         Scene scene = new Scene(layout);
         primaryStage.setScene(scene);

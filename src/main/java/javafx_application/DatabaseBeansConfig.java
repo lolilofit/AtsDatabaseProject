@@ -159,21 +159,21 @@ public class DatabaseBeansConfig {
     }
 
     public class View {
-        private Parent view;
+        private Parent parent;
         private Object controller;
         private String name;
 
-        public View(String name, Parent view, Object controller) {
+        public View(String name, Parent parent, Object controller) {
             this.name = name;
-            this.view = view;
+            this.parent = parent;
             this.controller = controller;
         }
-        public Parent getView() {
-            return view;
+        public Parent getParent() {
+            return parent;
         }
 
-        public void setView(Parent view) {
-            this.view = view;
+        public void setParent(Parent parent) {
+            this.parent = parent;
         }
 
         public Object getController() {
